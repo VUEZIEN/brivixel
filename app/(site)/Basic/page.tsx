@@ -8,6 +8,7 @@ interface FormData {
   telepon: string;
   desain: string;
   paymentMethod: string;
+  paymentProof: File | null; // New state for payment proof
 }
 
 const PaketKecil = () => {
@@ -16,13 +17,18 @@ const PaketKecil = () => {
     telepon: "",
     desain: "",
     paymentMethod: "",
+    paymentProof: null, // Initialize payment proof state
   });
 
+  const [customDesain, setCustomDesain] = useState<string>(""); // New state for manual input
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submittedTelepons, setSubmittedTelepons] = useState<string[]>([]);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [showBarcode, setShowBarcode] = useState<boolean>(false);
   const [barcodeDataUrl, setBarcodeDataUrl] = useState<string | null>(null);
+  const [paymentProofPreview, setPaymentProofPreview] = useState<string | null>(
+    null,
+  ); 
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -32,6 +38,21 @@ const PaketKecil = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleCustomDesainChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomDesain(e.target.value);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setFormData({ ...formData, paymentProof: file });
+
+      // Create a preview URL for the uploaded image
+      const previewUrl = URL.createObjectURL(file);
+      setPaymentProofPreview(previewUrl);
+    }
   };
 
   const validateForm = () => {
@@ -51,7 +72,11 @@ const PaketKecil = () => {
       newErrors.telepon = "No. Telepon ini sudah digunakan.";
     }
 
-    if (!formData.desain) {
+    // Use customDesain if manual option is selected
+    if (formData.desain === "Manual" && !customDesain) {
+      formIsValid = false;
+      newErrors.desain = "Silakan ketik desain Anda.";
+    } else if (!formData.desain) {
       formIsValid = false;
       newErrors.desain = "Jenis desain harus diisi.";
     }
@@ -61,16 +86,20 @@ const PaketKecil = () => {
       newErrors.paymentMethod = "Pilih metode pembayaran.";
     }
 
+    if (!formData.paymentProof) {
+      formIsValid = false;
+      newErrors.paymentProof = "Unggah bukti pembayaran.";
+    }
+
     setErrors(newErrors);
     return formIsValid;
   };
 
   const generateBarcode = (paymentMethod: string) => {
-    // Simulate barcode generation based on the payment method
     const barcodeUrls = {
-      DANA: "path/to/dana-barcode.png", // Replace with actual barcode URL
-      BCA: "path/to/bca-barcode.png", // Replace with actual barcode URL
-      Gopay: "path/to/gopay-barcode.png", // Replace with actual barcode URL
+      DANA: "path/to/dana-barcode.png",
+      BCA: "path/to/bca-barcode.png",
+      Gopay: "path/to/gopay-barcode.png",
     };
     return barcodeUrls[paymentMethod];
   };
@@ -98,7 +127,11 @@ const PaketKecil = () => {
     if (validateForm()) {
       await downloadImage();
 
-      const message = `Nama: ${formData.nama}\nNo. Telepon: ${formData.telepon}\nDesain: ${formData.desain}\nMetode Pembayaran: ${formData.paymentMethod}`;
+      // Use customDesain if manual is selected
+      const desain =
+        formData.desain === "Manual" ? customDesain : formData.desain;
+
+      const message = `Nama: ${formData.nama}\nNo. Telepon: ${formData.telepon}\nDesain: ${desain}\nMetode Pembayaran: ${formData.paymentMethod}`;
       const phoneNumber = "087782525212";
       const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
         message,
@@ -112,14 +145,20 @@ const PaketKecil = () => {
         setStatusMessage("Gagal mengirim data. Pastikan WhatsApp terinstal.");
       }
 
-      setFormData({ nama: "", telepon: "", desain: "", paymentMethod: "" });
+      setFormData({
+        nama: "",
+        telepon: "",
+        desain: "",
+        paymentMethod: "",
+        paymentProof: null,
+      });
+      setCustomDesain(""); // Reset custom desain field
       setTimeout(() => setStatusMessage(null), 3000);
     } else {
       setStatusMessage("Gagal mengirim data.");
       setTimeout(() => setStatusMessage(null), 3000);
     }
   };
-
   return (
     <>
       <section className="pb-12.5 pt-32.5 lg:pb-25 lg:pt-45 xl:pb-30 xl:pt-50">
@@ -200,6 +239,10 @@ const PaketKecil = () => {
                   <option value="Desain 3">Desain Banner</option>
                   <option value="Desain 4">Desain Undangan</option>
                   <option value="Desain 5">Desain Aplikasi</option>
+                  <option value="Desain 5">Desain Website</option>
+                  <option value="Desain 5">Desain Produk</option>
+
+
                   <option value="Manual">Lainnya</option>
                 </select>
                 {errors.desain && (
@@ -217,10 +260,10 @@ const PaketKecil = () => {
                   </label>
                   <input
                     type="text"
-                    name="desain"
+                    name="custom-desain"
                     id="custom-desain"
-                    value={formData.desain}
-                    onChange={handleChange}
+                    value={customDesain}
+                    onChange={handleCustomDesainChange}
                     className="w-full rounded-lg border p-2.5 dark:bg-gray-700 dark:text-white"
                     placeholder="Masukkan desain yang diinginkan"
                   />
@@ -267,17 +310,46 @@ const PaketKecil = () => {
                   <img src={barcodeDataUrl} alt="Barcode" className="mt-3" />
                 </div>
               )}
+              <div>
+                <label
+                  htmlFor="paymentProof"
+                  className="mb-2 block text-sm font-medium text-black dark:text-white"
+                >
+                  Unggah Bukti Pembayaran
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="w-full rounded-lg border p-2.5 dark:bg-gray-700 dark:text-white"
+                />
+                {errors.paymentProof && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.paymentProof}
+                  </p>
+                )}
+
+                {paymentProofPreview && ( // Check if there's a preview to show
+                  <div className="mt-4">
+                    <img
+                      src={paymentProofPreview}
+                      alt="Preview Bukti Pembayaran"
+                      className="max-w-full rounded-lg" // Optional styling
+                    />
+                  </div>
+                )}
+              </div>
 
               <button
                 type="submit"
                 className="w-full rounded-lg bg-blue-600 py-2.5 text-white hover:bg-blue-700"
               >
-                Kirim
+               Unduh & Kirim
               </button>
             </form>
 
             {statusMessage && (
-              <p className="mt-5 text-center text-green-500">{statusMessage}</p>
+              <p className="mt-5 text-center text-red-500">{statusMessage}</p>
             )}
           </motion.div>
         </div>
