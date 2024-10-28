@@ -173,7 +173,7 @@ const Bergabung = () => {
                 <textarea
                   name="alasan"
                   id="alasan"
-                  rows="4"
+              
                   value={formData.alasan}
                   onChange={handleChange}
                   className="w-full p-2.5 rounded-lg border dark:bg-gray-700 dark:text-white"

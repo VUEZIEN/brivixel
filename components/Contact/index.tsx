@@ -191,14 +191,8 @@ const Contact = () => {
             </motion.div>
             <motion.div
               variants={{
-                hidden: {
-                  opacity: 0,
-                  y: -50,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                },
+                hidden: { opacity: 0, y: -50 },
+                visible: { opacity: 1, y: 0 },
               }}
               initial="hidden"
               whileInView="visible"
@@ -214,14 +208,22 @@ const Contact = () => {
                 <h3 className="mb-4 text-metatitle3 font-medium text-black dark:text-white">
                   Lokasi Kami
                 </h3>
-                <p>Jl. Ir. Haji Juanda, Cikampek Timur, Kec. Cikampek, Karawang, Jawa Barat 41373</p>
+                <p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Cikampek+Timur"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Jl. Ir. Haji Juanda, Cikampek Timur, Kec. Cikampek, Karawang, Jawa Barat 41373
+                  </a>
+                </p>
               </div>
               <div className="5 mb-7">
                 <h3 className="mb-4 text-metatitle3 font-medium text-black dark:text-white">
                   Alamat Email
                 </h3>
                 <p>
-                  <a href="#">zizzzdul817@gmail.com</a>
+                  <a href="mailto:zizzzdul817@gmail.com">zizzzdul817@gmail.com</a>
                 </p>
               </div>
               <div>
@@ -229,7 +231,9 @@ const Contact = () => {
                   Nomor Telepon
                 </h4>
                 <p>
-                  <a href="#">+62-877-8253-5212</a>
+                  <a href="https://wa.me/6287782535212" target="_blank" rel="noopener noreferrer">
+                    +62-877-8253-5212
+                  </a>
                 </p>
               </div>
             </motion.div>

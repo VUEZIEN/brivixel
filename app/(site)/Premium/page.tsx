@@ -28,7 +28,7 @@ const PaketKecil = () => {
   const [barcodeDataUrl, setBarcodeDataUrl] = useState<string | null>(null);
   const [paymentProofPreview, setPaymentProofPreview] = useState<string | null>(
     null,
-  ); 
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -175,7 +175,7 @@ const PaketKecil = () => {
             className="animate_top rounded-lg bg-white px-7.5 pt-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:px-15 xl:pt-15"
           >
             <h2 className="mb-15 text-center text-3xl font-semibold text-black dark:text-white xl:text-sectiontitle2">
-              Paket Kecil
+              Paket Besar
             </h2>
 
             <form id="form-image" onSubmit={handleSubmit} className="space-y-6">
@@ -349,7 +349,7 @@ const PaketKecil = () => {
                 type="submit"
                 className="w-full rounded-lg bg-blue-600 py-2.5 text-white hover:bg-blue-700"
               >
-               Unduh & Kirim
+                Unduh & Kirim
               </button>
             </form>
 

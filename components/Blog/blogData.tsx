@@ -4,9 +4,9 @@ const BlogData: Blog[] = [
   {
     _id: 1,
     mainImage: "/images/blog/blog-01.png",
-    title: "Manfaat Desain Grafis Profesional untuk Bisnis Anda",
+    title: "Tipografi Desain untuk Efisiensi Bisnis yang Lebih Tinggi",
     metadata:
-      "Pelajari bagaimana desain grafis yang tepat dapat meningkatkan citra dan kesuksesan bisnis Anda.",
+      "Cari tahu bagaimana tipografi desain yang optimal dapat mendukung citra dan pertumbuhan bisnis Anda.",
   },
   {
     _id: 2,

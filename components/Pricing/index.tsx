@@ -124,7 +124,7 @@ const Pricing = () => {
                 </ul>
               </div>
 
-              <Link href="/blog" passHref>
+              <Link href="/Premium" passHref>
                 <button
                   aria-label="Dapatkan Paket Sedang"
                   className="group/btn inline-flex items-center gap-2.5 font-medium text-primary transition-all duration-300 dark:text-white dark:hover:text-primary"
@@ -177,7 +177,7 @@ const Pricing = () => {
                 </ul>
               </div>
 
-              <Link href="/blog" passHref>
+              <Link href="/Premium" passHref>
                 <button
                   aria-label="Dapatkan Paket Besar"
                   className="group/btn inline-flex items-center gap-2.5 font-medium text-primary transition-all duration-300 dark:text-white dark:hover:text-primary"

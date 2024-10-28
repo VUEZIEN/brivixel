@@ -2,8 +2,8 @@ import SidebarLink from "@/components/Docs/SidebarLink";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "BRIVIXEL - Panduan Pemesanan Jasa Desain Grafis",
-  description: "Panduan lengkap untuk memesan jasa desain grafis berkualitas dari BRIVIXEL.",
+  title: "BRIVIXEL - Update Website",
+  description: "Informasi terbaru mengenai update website dari BRIVIXEL.",
 };
 
 export default function DocsPage() {
@@ -22,10 +22,10 @@ export default function DocsPage() {
 
             <div className="w-full px-4 lg:w-3/4">
               <div className="blog-details blog-details-docs shadow-three dark:bg-gray-dark rounded-sm bg-white px-8 py-11 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]">
-                <h1>Panduan Pemesanan Jasa Desain Grafis di BRIVIXEL</h1>
+                <h1>Update Website BRIVIXEL</h1>
 
                 <p className="text-body-color dark:text-body-color-dark text-base">
-                  Ikuti langkah-langkah berikut untuk memesan jasa desain grafis dari BRIVIXEL:
+                  Berikut adalah informasi terbaru mengenai update website dari BRIVIXEL:
                 </p>
 
                 <ol className="list-decimal ml-6 text-body-color dark:text-body-color-dark text-base">

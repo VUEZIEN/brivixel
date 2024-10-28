@@ -28,12 +28,10 @@ const CTA = () => {
               className="animate_left md:w-[70%] lg:w-1/2"
             >
               <h2 className="mb-4 w-11/12 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle4">
-                Bergabunglah Bersama Kami & Tingkatkan Produktivitas Desain Anda
+                Selamat untuk Para Pemenang! Ambil Hadiahmu Sekarang
               </h2>
               <p>
-                Dapatkan akses ke berbagai tools dan sumber daya untuk
-                meningkatkan keterampilan desain grafis Anda. Mari tumbuh
-                bersama komunitas kreatif.
+                Bagi para pemenang, kami menyediakan hadiah berupa saldo dompet digital, voucher belanja, layanan gratis dan premium, serta akses ke webinar atau kelas online gratis. Tingkatkan keterampilan dan produktivitas desain Anda bersama kami!
               </p>
             </motion.div>
             <motion.div
@@ -62,10 +60,10 @@ const CTA = () => {
                   className="hidden xl:block"
                 />
                 <a
-                  href="/auth/signup"
+                  href="/docs/reward"
                   className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
                 >
-                  Daftar Gratis
+                  Ambil Hadiah
                   <Image
                     width={20}
                     height={20}

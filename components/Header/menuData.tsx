@@ -11,7 +11,7 @@ const dataMenu: Menu[] = [
     id: 2,
     title: "Keunggulan",
     newTab: false,
-    path: "/#features",
+    path: "/features",
   },
   {
     id: 2.1,
