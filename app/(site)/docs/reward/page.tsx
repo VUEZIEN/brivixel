@@ -277,7 +277,7 @@ export default function RewardsPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [hasParticipated, setHasParticipated] = useState(() => {
     // Check localStorage to see if the user has already participated
-    return localStorage.getItem("hasParticipated") === "true";
+    // return localStorage.getItem("hasParticipated") === "true";
   });
 
   useEffect(() => {
@@ -508,6 +508,7 @@ export default function RewardsPage() {
       <section className="pb-16 pt-24 md:pb-20 md:pt-28 lg:pb-24 lg:pt-32">
         <div className="container mx-auto">
           <div className="-mx-4 flex flex-wrap">
+            {/* Sidebar */}
             <div className="w-full px-4 lg:w-1/4">
               <div className="sticky top-[74px] mr-1 rounded-lg border border-white p-4 shadow-solid-4 transition-all dark:border-strokedark dark:bg-gray-800">
                 <ul className="space-y-2">
@@ -515,10 +516,11 @@ export default function RewardsPage() {
                 </ul>
               </div>
             </div>
-
+  
+            {/* Main Content */}
             <div className="w-full px-4 lg:w-3/4">
               <div className="blog-details blog-details-docs shadow-three rounded-sm bg-white px-8 py-11 dark:bg-gray-900 sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px]">
-                <h1 className="text-gray-900 dark:text-white">
+                <h1 className="text-gray-900 dark:text-white text-xl sm:text-2xl lg:text-3xl">
                   Bergabunglah dalam Permainan dan Menangkan Hadiah di BRIVIXEL!
                 </h1>
                 <p className="text-body-color dark:text-body-color-dark text-base">
@@ -526,7 +528,7 @@ export default function RewardsPage() {
                   berikut untuk menyelesaikan 20 soal dan menangkan hadiah
                   menarik:
                 </p>
-
+  
                 <div className="text-body-color dark:text-body-color-dark text-base">
                   <ol className="ml-6 list-decimal">
                     <li>
@@ -555,7 +557,7 @@ export default function RewardsPage() {
                       hadiah menarik dari kami!
                     </li>
                   </ol>
-
+  
                   <p>
                     Bagi para pemenang, kami menyediakan hadiah berupa saldo
                     dompet digital, voucher belanja, layanan gratis dan premium,
@@ -563,135 +565,140 @@ export default function RewardsPage() {
                     keterampilan dan produktivitas desain Anda bersama kami!
                   </p>
                 </div>
-                <h2 className="mb-5 mt-10 text-2xl font-bold text-center text-gray-800">
-                Hadiah Menanti:
-</h2>
-<div className="flex flex-col items-center mt-4">
-  <div
-    onClick={handleModalOpen}
-    className="cursor-pointer bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full px-8 py-3 text-lg font-semibold transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg shadow-md"
-  >
-    Mulai Tantangan
+  
+                <h2 className="mb-5 mt-10 text-center text-2xl font-bold text-gray-800">
+                  Hadiah Menanti:
+                </h2>
+                <div className="mt-4 flex flex-col items-center">
+                  <div
+                    onClick={handleModalOpen}
+                    className="transform cursor-pointer rounded-full bg-gradient-to-r from-blue-400 to-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
+                  >
+                    Mulai Tantangan
+                  </div>
+                  {isChallengeComplete && (
+                    <p className="mt-4 text-center text-lg font-semibold text-green-600">
+                      Tantangan selesai! Terima kasih telah berpartisipasi!
+                    </p>
+                  )}
+                </div>
+{/* Enhanced Modal for Challenge */}
+{isModalOpen && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 backdrop-blur-md transition-opacity duration-300 ease-out">
+    <div className="relative rounded-2xl bg-white p-10 dark:bg-gray-900 mt-20 max-h-[80vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 ease-in-out scale-95 hover:scale-100 animate-modalEntrance border border-gray-300 dark:border-gray-700">
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={handleModalClose}
+          className="text-gray-500 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-all duration-200"
+        >
+          ✕
+        </button>
+      </div>
+      <h2 className="text-2xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-6 animate-fadeIn tracking-wide drop-shadow-lg">
+        {questions[currentQuestionIndex].question}
+      </h2>
+      <form onSubmit={handleChallengeSubmit}>
+        {questions[currentQuestionIndex].options.map((option, index) => (
+          <div
+            key={index}
+            className="mt-4 flex items-center p-3 rounded-md bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 shadow-md hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
+          >
+            <input
+              type="radio"
+              id={`option-${index}`}
+              name="options"
+              value={option}
+              checked={selectedOption === option}
+              onChange={() => setSelectedOption(option)}
+              required
+              className="h-6 w-6 text-blue-600 focus:ring-blue-500 transition-transform transform hover:scale-110 duration-150"
+            />
+            <label htmlFor={`option-${index}`} className="ml-4 text-gray-700 dark:text-gray-300 text-lg font-medium">
+              {option}
+            </label>
+          </div>
+        ))}
+        {validationError && (
+          <p className="mt-2 text-red-600 text-sm animate-fadeIn">
+            {validationError}
+          </p>
+        )}
+        <button
+          type="submit"
+          className="mt-8 w-full rounded-full bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-3 text-white font-semibold hover:from-blue-700 hover:to-blue-800 shadow-lg transition-transform transform hover:scale-105 duration-200 animate-buttonBounce tracking-wide"
+        >
+          Kirim Jawaban
+        </button>
+      </form>
+
+      <div className="mt-8 flex items-center justify-center">
+        <p className="text-sm font-medium text-gray-600 dark:text-gray-300 animate-fadeIn">
+          Waktu tersisa:{" "}
+          <span className={`font-semibold ${timer < 10 ? "text-red-500 animate-pulse" : "text-green-500"}`}>
+            {timer} detik
+          </span>
+        </p>
+      </div>
+    </div>
   </div>
-  {isChallengeComplete && (
-    <p className="mt-4 text-lg text-green-600 font-semibold text-center">
-      Tantangan selesai! Terima kasih telah berpartisipasi!
-    </p>
-  )}
-</div>
+)}
 
 
-                {/* Modal for Challenge */}
-                {isModalOpen && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="rounded-lg bg-white p-6 dark:bg-gray-800">
-                      <h2 className="text-lg font-semibold">
-                        {questions[currentQuestionIndex].question}
-                      </h2>
-                      <form onSubmit={handleChallengeSubmit}>
-                        {questions[currentQuestionIndex].options.map(
-                          (option, index) => (
-                            <div key={index} className="mt-2">
-                              <input
-                                type="radio"
-                                id={`option-${index}`}
-                                name="options"
-                                value={option}
-                                checked={selectedOption === option}
-                                onChange={() => setSelectedOption(option)}
-                                required
-                              />
-                              <label
-                                htmlFor={`option-${index}`}
-                                className="ml-2"
-                              >
-                                {option}
-                              </label>
-                            </div>
-                          ),
-                        )}
-                        {validationError && (
-                          <p className="text-red-600">{validationError}</p>
-                        )}
-                        <button
-                          type="submit"
-                          className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                        >
-                          Kirim Jawaban
-                        </button>
-                      </form>
+        {/* //di atas untuk UI soalnya */}
+  
+        <form onSubmit={handleFinalSubmit} className="max-w-lg mx-auto p-8 bg-white rounded-2xl shadow-2xl dark:bg-gray-900 transition-all duration-300">
+  <div className="mb-6">
+    <label htmlFor="name" className="block text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+      Nama:
+    </label>
+    <input
+      type="text"
+      id="name"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+      placeholder="Masukkan nama Anda"
+      className="w-full rounded-lg border border-gray-300 dark:border-gray-700 p-3 text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 shadow-sm"
+    />
+  </div>
 
-                      <button
-                        onClick={handleModalClose}
-                        className="mt-4 text-gray-500 hover:underline"
-                      >
-                        Tutup
-                      </button>
-                      <div className="mt-4">
-                        <p className="text-sm">Waktu tersisa: {timer} detik</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+  <div className="mb-6">
+    <label htmlFor="phone" className="block text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+      No. Telepon:
+    </label>
+    <input
+      type="tel"
+      id="phone"
+      value={phoneNumber}
+      onChange={(e) => setPhoneNumber(e.target.value)}
+      required
+      placeholder="Masukkan no. telepon Anda"
+      className="w-full rounded-lg border border-gray-300 dark:border-gray-700 p-3 text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 shadow-sm"
+    />
+  </div>
 
-                {/* Challenge Questions and Modal Code Here */}
+  <div className="mb-4 text-base text-gray-600 dark:text-gray-300">
+    <strong className="text-red-600 dark:text-red-500">Harap mengerjakan terlebih dahulu Tantangan Brivixel!</strong>
+  </div>
 
-                <form onSubmit={handleFinalSubmit}>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="name"
-                      className="mb-2 block text-lg font-semibold"
-                    >
-                      Nama:
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="w-full rounded-md border border-gray-300 p-2"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label
-                      htmlFor="phone"
-                      className="mb-2 block text-lg font-semibold"
-                    >
-                      No. Telepon:
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      required
-                      className="w-full rounded-md border border-gray-300 p-2"
-                    />
-                  </div>
-                  <div className="text-body-color dark:text-body-color-dark text-base">
-                    <b className="text-red-500 dark:text-white">
-                      Harap mengerjakan terlebih dahulu Tantangan Brivixel!
-                    </b>
-                  </div>
-                  <div className="flex space-x-4">
-                    <button
-                      type="submit"
-                      className="flex-1 rounded-md bg-blue-500 p-2 font-semibold text-white hover:bg-blue-600"
-                    >
-                      Unduh Nilai
-                    </button>
-                    <button
-                      type="button" // Change to button to prevent form submission
-                      onClick={() =>
-                        window.open("https://wa.me/087782535212", "_blank")
-                      }
-                      className="flex-1 rounded-md bg-red-400 p-2 font-semibold text-white hover:bg-red-500"
-                    >
-                      Kirimkan
-                    </button>
-                  </div>
-                </form>
+  <div className="flex flex-col sm:flex-row sm:space-x-4 mt-6">
+    <button
+      type="submit"
+      className="flex-1 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 shadow-md hover:shadow-lg transform hover:scale-105 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
+    >
+      Unduh Nilai
+    </button>
+    
+    <button
+      type="button"
+      onClick={() => window.open("https://wa.me/6287782535212", "_blank")}
+      className="flex-1 mt-4 sm:mt-0 rounded-full bg-gradient-to-r from-red-400 to-red-500 text-white font-semibold py-3 shadow-md hover:shadow-lg transform hover:scale-105 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900"
+    >
+      Kirimkan
+    </button>
+  </div>
+</form>
+
               </div>
             </div>
           </div>
@@ -699,9 +706,9 @@ export default function RewardsPage() {
       </section>
       <style jsx>{`
         .no-select {
-          user-select: none; /* Prevent text selection */
+          user-select: none;
         }
       `}</style>
     </>
   );
-}
+}  

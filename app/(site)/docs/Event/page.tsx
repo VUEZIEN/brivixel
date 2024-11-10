@@ -79,38 +79,38 @@ function DailyReward() {
   }, []);
 
   return (
-    <div className="relative mt-8 p-6 border rounded-lg bg-white dark:bg-gray-900 dark:text-white shadow-lg transition-all">
+    <div className="relative mt-4 p-4 sm:p-6 border rounded-lg bg-white dark:bg-gray-900 dark:text-white shadow-lg transition-all">
       <div className="absolute top-4 right-4 flex items-center">
-        <FaCoins className="text-4xl text-yellow-500" />
-        <span className="ml-2 text-xl font-bold text-yellow-600 dark:text-yellow-400">{coins}</span>
+        <FaCoins className="text-3xl sm:text-4xl text-yellow-500" />
+        <span className="ml-2 text-lg sm:text-xl font-bold text-yellow-600 dark:text-yellow-400">{coins}</span>
       </div>
 
-      <h2 className="text-2xl font-extrabold mb-4 text-primary">Mengumpulkan Koin</h2>
-      <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
+      <h2 className="text-xl sm:text-2xl font-extrabold mb-2 sm:mb-4 text-primary">Ayo Kumpulkan</h2>
+      <p className="mb-4 sm:mb-6 text-base sm:text-lg text-gray-700 dark:text-gray-300">
         Kumpulkan koin setiap hari dan tukarkan untuk mendapatkan template desain grafis eksklusif.
       </p>
       
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <button 
           onClick={collectCoins} 
-          className="flex items-center px-6 py-3 bg-yellow-500 rounded-md text-white font-semibold transition-transform transform hover:scale-105 shadow-lg"
+          className="flex items-center px-4 py-2 sm:px-6 sm:py-3 bg-yellow-500 rounded-md text-white font-semibold transition-transform transform hover:scale-105 shadow-lg"
         >
-          Ambil Koin Hari Ini <FaCoins className="ml-2" />
+          Ambil Koin <FaCoins className="ml-2" />
         </button>
-        <div className="text-right">
-          <p className="text-lg font-semibold">Total Koin: <span className="text-yellow-600 dark:text-yellow-400">{coins}</span></p>
-          <p className="text-sm">{lastCollectedDate ? `Terakhir diambil: ${lastCollectedDate.toLocaleString()}` : "Belum diambil."}</p>
+        <div className="text-right text-sm sm:text-base">
+          <p className="font-semibold">Total Koin: <span className="text-yellow-600 dark:text-yellow-400">{coins}</span></p>
+          <p className="text-xs sm:text-sm">{lastCollectedDate ? `Terakhir diambil: ${lastCollectedDate.toLocaleString()}` : "Belum diambil."}</p>
         </div>
       </div>
 
-      <h3 className="text-xl font-semibold mb-4">Template Desain Tersedia:</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4">Template Desain Tersedia:</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {templates.map((template, index) => (
           <div key={index} className="border rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 overflow-hidden transition-transform transform hover:scale-105">
-            <img src={template.imageUrl} alt={template.name} className="w-full h-40 object-cover" />
+            <img src={template.imageUrl} alt={template.name} className="w-full h-32 sm:h-40 object-cover" />
             <div className="p-4">
-              <h4 className="font-bold text-lg">{template.name}</h4>
-              <p className="text-lg font-semibold">{template.price} Koin</p>
+              <h4 className="font-bold text-md sm:text-lg">{template.name}</h4>
+              <p className="text-md font-semibold">{template.price} Koin</p>
               <button 
                 onClick={() => redeemTemplate(template)}
                 className={`mt-2 w-full px-4 py-2 rounded-md transition-colors duration-200 ${coins < template.price ? "bg-gray-300 cursor-not-allowed" : "bg-primary text-white hover:bg-yellow-500"}`}
@@ -123,11 +123,10 @@ function DailyReward() {
         ))}
       </div>
 
-      {/* Popup Notification */}
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
-          <div className={`transition-transform transform ${showPopup ? 'scale-100 opacity-100' : 'scale-0 opacity-0'} bg-white dark:bg-gray-900 p-8 rounded-lg shadow-2xl border border-gray-300 dark:border-gray-700`}>
-            <p className="text-lg font-semibold flex items-center text-center text-gray-800 dark:text-white mb-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50 px-4 sm:px-0">
+          <div className="bg-white dark:bg-gray-900 p-4 sm:p-8 rounded-lg shadow-2xl border border-gray-300 dark:border-gray-700 max-w-xs sm:max-w-sm w-full">
+            <p className="text-md sm:text-lg font-semibold flex items-center text-center text-gray-800 dark:text-white mb-4">
               <FaCoins className="mr-2 text-yellow-500" /> {popupMessage}
             </p>
             {templateLink && (
@@ -135,14 +134,14 @@ function DailyReward() {
                 href={templateLink} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="mt-4 inline-block px-6 py-3 bg-primary text-white rounded-md transition-all hover:bg-yellow-500"
+                className="mt-4 inline-block px-4 sm:px-6 py-2 sm:py-3 bg-primary text-white font-semibold rounded-md hover:bg-yellow-500 transition-transform transform hover:scale-105 w-full text-center"
               >
                 Lihat Template
               </a>
             )}
             <button 
-              onClick={() => setShowPopup(false)} 
-              className="mt-4 inline-block px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+              onClick={() => { setShowPopup(false); setTemplateLink(""); }}
+              className="mt-2 sm:mt-4 px-4 py-2 sm:px-6 sm:py-3 w-full text-sm sm:text-base rounded-md bg-gray-400 dark:bg-gray-600 text-white font-semibold hover:bg-gray-500 dark:hover:bg-gray-500 transition-colors"
             >
               Tutup
             </button>
@@ -152,6 +151,7 @@ function DailyReward() {
     </div>
   );
 }
+
 
 // Main DocsPage component
 export default function DocsPage() {
